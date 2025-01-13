@@ -1,38 +1,22 @@
 package main
 
-import "fmt"
-
-type Student struct {
-	Name  string
-	Marks []int
-}
-
-func AddMark(student *Student, mark int) {
-	student.Marks = append(student.Marks, mark)
-}
-
-func CalculateAverage(student Student) float64 {
-	if len(student.Marks) == 0 {
-		return 0.0
-	}
-
-	sum := 0
-	for index, mark := range student.Marks { //using "index" instead of "_" (just out of respect towards the indexes)
-		sum += mark
-		fmt.Scanln(index)
-	}
-
-	return float64(sum) / float64(len(student.Marks))
-}
+import (
+	"book/book"
+	"fmt"
+)
 
 func main() {
-	student := Student{Name: "Sai"}
+	b := book.Book{Title: "The Alchemist", Author: "Paulo Coelho", Pages: 150, CopiesAvailable: 10}
+	k := book.Book{Title: "The Hobbit", Author: "J.R.R. Tolkien", Pages: 250, CopiesAvailable: 5}
 
-	AddMark(&student, 65)
-	AddMark(&student, 82)
-	AddMark(&student, 77)
+	b.Display()
+	fmt.Println(b.Borrow())
+	b.Display()
+	b.ReturnBook()
+	b.Display()
 
-	average := CalculateAverage(student)
-
-	fmt.Printf("The average marks for %s are: %.2f\n", student.Name, average)
+	book.SwapTitles(&b, &k)
+	fmt.Println("\nAfter swapping titles:")
+	b.Display()
+	k.Display()
 }
